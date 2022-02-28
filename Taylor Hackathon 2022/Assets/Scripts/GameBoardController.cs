@@ -160,6 +160,10 @@ public class GameBoardController : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Menu");
+        }
 
         if (Input.GetMouseButtonDown(0) && !levelOver)
         {
@@ -197,6 +201,11 @@ public class GameBoardController : MonoBehaviour
                         sounds.Select();
                         objectClicked.GetComponent<TileController>().OnSelect();
                     }
+                    else if (objectSelected == objectClicked)
+                    {
+                        objectSelected.GetComponent<TileController>().OnDeselect();
+                        objectSelected = null;
+                    }
                     else if (objectSelected != null && objectSelected.CompareTag("Tile"))
                     {
                         sounds.Swap();
@@ -215,6 +224,11 @@ public class GameBoardController : MonoBehaviour
                         objectSelected = objectClicked;
                         sounds.Select();
                         objectClicked.GetComponent<Condition>().OnSelect();
+                    }
+                    else if (objectSelected == objectClicked)
+                    {
+                        objectClicked.GetComponent<Condition>().OnDeselect();
+                        objectSelected = null;
                     }
                     else if (objectSelected != null && objectSelected.CompareTag("Rule"))
                     {
